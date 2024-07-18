@@ -1,0 +1,7 @@
+{
+  "verbose": true,
+  "ext": "ts,js",
+  "ignore": ["test/**"],
+  "watch": ["src/**/*"],
+  "exec": "npm-run-all build start"
+}
