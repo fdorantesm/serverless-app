@@ -19,6 +19,48 @@ functions:
       - httpApi:
           path: /info
           method: get
+  listCustomers:
+    handler: dist/customers/infrastructure/http/handlers/list-customers.handler
+    events:
+      - httpApi:
+          path: /customers
+          method: get
+  getCustomer:
+    handler: dist/customers/infrastructure/http/handlers/get-customer.handler
+    events:
+      - httpApi:
+          path: /customers/{id}
+          method: get
+  createCustomer:
+    handler: dist/customers/infrastructure/http/handlers/create-customer.handler
+    events:
+      - httpApi:
+          path: /customers
+          method: post
+  updateCustomer:
+    handler: dist/customers/infrastructure/http/handlers/update-customer.handler
+    events:
+      - httpApi:
+          path: /customers/{id}
+          method: patch
+  deleteCustomer:
+    handler: dist/customers/infrastructure/http/handlers/delete-customer.handler
+    events:
+      - httpApi:
+          path: /customers/{id}
+          method: delete
+  getCustomerCredit:
+    handler: dist/customers/infrastructure/http/handlers/get-customer-credit.handler
+    events:
+      - httpApi:
+          path: /customers/{id}/credit
+          method: get
+  updateCustomerCredit:
+    handler: dist/customers/infrastructure/http/handlers/update-customer-credit.handler
+    events:
+      - httpApi:
+          path: /customers/{id}/credit
+          method: patch
 
 plugins:
   - serverless-offline

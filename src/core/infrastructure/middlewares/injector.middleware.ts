@@ -1,15 +1,17 @@
-import { container } from "@/core/infrastructure/container/container";
 import type { AppContext, Context } from "@/core";
+import type { Container } from "inversify";
 import type { HandlerLambda, NextFunction } from "middy";
 
 type Handler = HandlerLambda & {
   context: Context & AppContext;
 };
 
-export const injectorMiddleware = () => {
+export const injectorMiddleware = (container?: Container) => {
   return {
     before: async (handler: Handler, next: NextFunction) => {
-      handler.context.get = (key: string) => container.get(key);
+      if (container) {
+        handler.context.get = (key: string) => container.get(key);
+      }
       next();
     },
   };
