@@ -1,8 +1,7 @@
-import { injectable } from "inversify";
-
+import { Injectable } from "@/core/injection";
 import type { CreditPayload } from "@/credits/domain/types/credit-payload.type";
 
-@injectable()
+@Injectable()
 export class CreditsRepository {
   constructor() {}
 

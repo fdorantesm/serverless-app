@@ -1,0 +1,19 @@
+meta {
+  name: Get Customer
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{HOST}}/customers/2b21052d-ead0-4bf9-a940-781af4af0f59
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Fernando Dorantes",
+    "email": "fer@dorant.es",
+    "phone": "+525555555555"
+  }
+}

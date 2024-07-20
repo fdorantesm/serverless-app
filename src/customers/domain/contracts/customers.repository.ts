@@ -4,4 +4,11 @@ import type { CustomerPayload } from "@/customers/domain/types/customer.payload"
 export interface CustomersRepository {
   create(data: CustomerPayload): Promise<CustomerEntity>;
   list(): Promise<CustomerEntity[]>;
+  get(id: string): Promise<CustomerEntity | undefined>;
+  update(
+    id: string,
+    data: CustomerPayload
+  ): Promise<CustomerEntity | undefined>;
+  delete(id: string): Promise<boolean>;
+  exists(id: string): Promise<boolean>;
 }

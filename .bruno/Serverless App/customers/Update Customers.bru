@@ -1,0 +1,17 @@
+meta {
+  name: Update Customers
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{HOST}}/customers/86bebbe6-406e-49d1-b20e-6eea9ffc574e
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Fernando Dorantes Millo"
+  }
+}

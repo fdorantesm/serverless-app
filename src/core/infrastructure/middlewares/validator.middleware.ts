@@ -11,7 +11,6 @@ export const validationMiddleware = (dto: any) => {
         await validateOrReject(object);
         handler.event.body = JSON.stringify(object);
       } catch (errors) {
-        console.log({ errors });
         const flattenedErrors = flattenValidationErrors(errors);
         throw {
           statusCode: 400,

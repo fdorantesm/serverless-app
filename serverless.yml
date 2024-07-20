@@ -63,4 +63,9 @@ functions:
           method: patch
 
 plugins:
+  - serverless-dotenv-plugin
   - serverless-offline
+
+custom:
+  dotenv:
+    path: .env.${opt:stage, 'local'}

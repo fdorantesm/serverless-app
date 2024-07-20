@@ -1,20 +1,35 @@
-import { inject, injectable } from "inversify";
-
+import { Inject, Injectable } from "@/core/injection";
 import type { CustomersRepository } from "@/customers/domain/contracts/customers.repository";
 import type { CustomerPayload } from "@/customers/domain/types/customer.payload";
 
-@injectable()
+@Injectable()
 export class CustomersService {
   constructor(
-    @inject("CustomersRepository")
+    @Inject("CustomersRepository")
     private readonly customersRepository: CustomersRepository
   ) {}
 
-  public async list() {
+  public list() {
     return this.customersRepository.list();
   }
 
-  public async create(data: CustomerPayload) {
+  public create(data: CustomerPayload) {
     return this.customersRepository.create(data);
+  }
+
+  public get(id: string) {
+    return this.customersRepository.get(id);
+  }
+
+  public update(id: string, data: CustomerPayload) {
+    return this.customersRepository.update(id, data);
+  }
+
+  public delete(id: string) {
+    return this.customersRepository.delete(id);
+  }
+
+  public exists(id: string) {
+    return this.customersRepository.exists(id);
   }
 }

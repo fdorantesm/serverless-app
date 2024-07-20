@@ -1,12 +1,12 @@
-import { inject, injectable } from "inversify";
+import { Inject, Injectable } from "@/core/injection";
 
 import type { CreditsRepository } from "@/credits/domain/contracts/credits.repository";
 import type { CreditEntity } from "@/credits/domain/entities/credit.entity";
 
-@injectable()
+@Injectable()
 export class CreditsService {
   constructor(
-    @inject("CreditsRepository")
+    @Inject("CreditsRepository")
     private readonly creditsRepository: CreditsRepository
   ) {}
 

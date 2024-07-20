@@ -26,12 +26,19 @@
   "dependencies": {
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
+    "connection-string": "^4.4.0",
     "inversify": "^6.0.2",
+    "luxon": "^3.4.4",
     "middy": "^0.36.0",
-    "reflect-metadata": "^0.2.2"
+    "mongoose": "^8.5.1",
+    "reflect-metadata": "^0.2.2",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@types/inversify": "^2.0.33",
+    "@types/luxon": "^3.4.2",
+    "@types/mongoose": "^5.11.97",
+    "@types/uuid": "^10.0.0",
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
