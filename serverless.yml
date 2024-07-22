@@ -49,17 +49,29 @@ functions:
       - httpApi:
           path: /customers/{id}
           method: delete
+  createCustomerCredits:
+    handler: dist/customers/infrastructure/http/handlers/get-customer-credits.handler
+    events:
+      - httpApi:
+          path: /customers/{customerId}/credits
+          method: get
   getCustomerCredit:
     handler: dist/customers/infrastructure/http/handlers/get-customer-credit.handler
     events:
       - httpApi:
-          path: /customers/{id}/credit
+          path: /customers/{customerId}/credits/{creditId}
           method: get
+  createCustomerCredit:
+    handler: dist/customers/infrastructure/http/handlers/create-customer-credit.handler
+    events:
+      - httpApi:
+          path: /customers/{customerId}/credits
+          method: post
   updateCustomerCredit:
     handler: dist/customers/infrastructure/http/handlers/update-customer-credit.handler
     events:
       - httpApi:
-          path: /customers/{id}/credit
+          path: /customers/{customerId}/credits/{creditId}
           method: patch
 
 plugins:

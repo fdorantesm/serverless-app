@@ -11,4 +11,7 @@ export interface CustomersRepository {
   ): Promise<CustomerEntity | undefined>;
   delete(id: string): Promise<boolean>;
   exists(id: string): Promise<boolean>;
+  findOne(
+    filter: Partial<CustomerPayload>
+  ): Promise<CustomerEntity | undefined>;
 }

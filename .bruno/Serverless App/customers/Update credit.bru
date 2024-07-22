@@ -1,0 +1,17 @@
+meta {
+  name: Update credit
+  type: http
+  seq: 7
+}
+
+patch {
+  url: {{HOST}}/customers/9fdee5c7-cce1-4001-9030-87a1b90826d7/credits/c13bba3a-b0a7-4609-956e-92a272bbaee3
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "balance": 4050
+  }
+}

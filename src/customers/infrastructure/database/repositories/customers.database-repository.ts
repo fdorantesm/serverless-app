@@ -55,4 +55,16 @@ export class CustomersDatabaseRepository implements CustomersRepository {
 
     return Boolean(customer);
   }
+
+  public async findOne(
+    filter: Partial<CustomerPayload>
+  ): Promise<CustomerEntity | undefined> {
+    const customer = await this.model.findOne(filter).exec();
+
+    if (customer) {
+      return CustomerEntity.createFromPrimitives(customer.toJSON());
+    }
+
+    return undefined;
+  }
 }

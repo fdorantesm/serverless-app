@@ -7,34 +7,34 @@ import {
 } from "middy/middlewares";
 
 import { Event, Context, type AppContext, injectorMiddleware } from "@/core";
-import { CustomersService } from "@/customers/domain/contracts/customers.service";
 import { container } from "@/customers";
 import { databaseConnectorMiddleware } from "@/core/infrastructure/middlewares/database-connector.middleware";
-import type { CustomerPayload } from "@/customers/domain/types/customer.payload";
+import { Response } from "@/core/infrastructure/http/classes/response";
+import type { UpdateCustomerUseCase } from "@/customers/application/use-cases/update-customer.use-case";
+import type { UpdateCustomerDto } from "@/customers/infrastructure/http/dtos/update-customer.dto";
+import { CustomerNotFoundException } from "@/customers/domain/exceptions/customer-not-found.exception";
 
 async function updateCustomer(event: Event, context: Context & AppContext) {
   const id = event.pathParameters!.id!;
-  const payload = event.body as Partial<CustomerPayload>;
+  const payload = event.body as unknown as UpdateCustomerDto;
 
-  const customerService = context.get<CustomersService>("CustomersService");
+  const updateCustomer = context.get<UpdateCustomerUseCase>(
+    "UpdateCustomerUseCase"
+  );
 
-  const customerExists = await customerService.exists(id);
-
-  if (!customerExists) {
-    return {
-      statusCode: 404,
-      body: JSON.stringify({ message: "Customer not found" }),
-    };
+  try {
+    const customer = await updateCustomer.execute(id, payload);
+    return Response.success(200, customer.toPrimitives());
+  } catch (error) {
+    switch (error.name) {
+      case CustomerNotFoundException.name: {
+        return Response.error(404, error.message);
+      }
+      default: {
+        return Response.error(500, error.message);
+      }
+    }
   }
-
-  const customer = await customerService.update(id, payload);
-
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      data: customer.toPrimitives(),
-    }),
-  };
 }
 
 export const handler = middy(updateCustomer)

@@ -7,4 +7,5 @@ export interface CreditsRepository {
   get(id: string): Promise<CreditEntity>;
   update(id: string, payload: CreditPayload): Promise<CreditEntity>;
   delete(id: string): Promise<boolean>;
+  findByCustomerId(customerId: string): Promise<CreditEntity[]>;
 }

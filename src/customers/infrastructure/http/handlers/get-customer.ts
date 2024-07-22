@@ -10,33 +10,22 @@ import { Event, Context, type AppContext, injectorMiddleware } from "@/core";
 import { CustomersService } from "@/customers/domain/contracts/customers.service";
 import { container } from "@/customers";
 import { databaseConnectorMiddleware } from "@/core/infrastructure/middlewares/database-connector.middleware";
+import { Response } from "@/core/infrastructure/http/classes/response";
+import type { GetCustomerUseCase } from "@/customers/application/use-cases/get-customer.use-case";
 
 async function getCustomer(event: Event, context: Context & AppContext) {
-  const customersService = context.get<CustomersService>("CustomersService");
+  const getCustomer = context.get<GetCustomerUseCase>("GetCustomerUseCase");
   const id = event.pathParameters!.id!;
-
   try {
-    const customer = await customersService.get(id);
-
-    if (!customer) {
-      return {
-        statusCode: 404,
-        body: JSON.stringify({ message: "Customer not found" }),
-      };
+    const customer = await getCustomer.execute(id);
+    return Response.success(200, customer.toPrimitives());
+  } catch (error: any) {
+    switch (error.name) {
+      case "CustomerNotFoundError":
+        return Response.error(404, error.message);
+      default:
+        return Response.error(500, error.message);
     }
-
-    const data = customer.toPrimitives();
-
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ data }),
-    };
-  } catch (error) {
-    console.error("Error getting customer", error);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ message: "Error getting customer" }),
-    };
   }
 }
 

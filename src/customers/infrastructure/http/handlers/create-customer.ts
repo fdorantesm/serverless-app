@@ -7,32 +7,33 @@ import {
 } from "middy/middlewares";
 
 import { Event, Context, type AppContext, injectorMiddleware } from "@/core";
-import { CustomersService } from "@/customers/domain/contracts/customers.service";
 import { container } from "@/customers";
 import { CreateCustomerDto } from "@/customers/infrastructure/http/dtos/create-customer.dto";
 import { validationMiddleware } from "@/core/infrastructure/middlewares/validator.middleware";
-import { CustomerEntity } from "@/customers/domain/entities/customer.entity";
 import { databaseConnectorMiddleware } from "@/core/infrastructure/middlewares/database-connector.middleware";
 import type { CustomerPayload } from "@/customers/domain/types/customer.payload";
+import { Response } from "@/core/infrastructure/http/classes/response";
+import type { CreateCustomerUseCase } from "@/customers/application/use-cases/create-customer.use-case";
 
 async function createCustomer(event: Event, context: Context & AppContext) {
   try {
-    const customerService = context.get<CustomersService>("CustomersService");
-    const payload = event.body as unknown as CustomerPayload;
-
-    const customer = await customerService.create(
-      CustomerEntity.createToPrimitives(payload)
+    const createCustomer = context.get<CreateCustomerUseCase>(
+      "CreateCustomerUseCase"
     );
+    const payload = event.body as unknown as CustomerPayload;
+    const customer = await createCustomer.execute(payload);
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ data: customer.toPrimitives() }),
-    };
+    return Response.success(201, customer.toPrimitives());
   } catch (error) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: "Internal server error" }),
-    };
+    switch (error.name) {
+      case "CustomerAlreadyExistsException": {
+        return Response.error(409, error.message);
+      }
+
+      default: {
+        return Response.error(500, error.message);
+      }
+    }
   }
 }
 

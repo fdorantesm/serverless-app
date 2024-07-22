@@ -32,4 +32,8 @@ export class CustomersService {
   public exists(id: string) {
     return this.customersRepository.exists(id);
   }
+
+  public findOne(filter: Partial<CustomerPayload>) {
+    return this.customersRepository.findOne(filter);
+  }
 }

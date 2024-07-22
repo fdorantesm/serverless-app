@@ -10,7 +10,7 @@ export class CreditsService {
     private readonly creditsRepository: CreditsRepository
   ) {}
 
-  public async create(data: any): Promise<any> {
+  public async create(data: any): Promise<CreditEntity | undefined> {
     return this.creditsRepository.create(data);
   }
 
@@ -18,15 +18,22 @@ export class CreditsService {
     return this.creditsRepository.list();
   }
 
-  public async get(id: string): Promise<CreditEntity> {
+  public async get(id: string): Promise<CreditEntity | undefined> {
     return this.creditsRepository.get(id);
   }
 
-  public async update(id: string, data: any): Promise<any> {
+  public async update(
+    id: string,
+    data: any
+  ): Promise<CreditEntity | undefined> {
     return this.creditsRepository.update(id, data);
   }
 
   public async delete(id: string): Promise<boolean> {
     return this.creditsRepository.delete(id);
+  }
+
+  public async findByCustomerId(customerId: string): Promise<CreditEntity[]> {
+    return this.creditsRepository.findByCustomerId(customerId);
   }
 }

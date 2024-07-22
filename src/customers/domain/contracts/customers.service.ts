@@ -8,4 +8,7 @@ export interface CustomersService {
   get(id: string): Promise<CustomerEntity>;
   delete(id: string): Promise<boolean>;
   exists(id: string): Promise<boolean>;
+  findOne(
+    filter: Partial<CustomerPayload>
+  ): Promise<CustomerEntity | undefined>;
 }

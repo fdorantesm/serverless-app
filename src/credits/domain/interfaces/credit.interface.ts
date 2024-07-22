@@ -1,7 +1,10 @@
 export interface Credit {
   id: string;
+  currency: string;
   customerId: string;
-  amount: number;
+  limit: number;
+  balance: number;
+  cutOffDay: number;
   createdAt: Date;
   updatedAt: Date;
 }
