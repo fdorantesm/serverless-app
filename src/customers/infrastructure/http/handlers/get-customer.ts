@@ -7,21 +7,21 @@ import {
 } from "middy/middlewares";
 
 import { Event, Context, type AppContext, injectorMiddleware } from "@/core";
-import { CustomersService } from "@/customers/domain/contracts/customers.service";
 import { container } from "@/customers";
 import { databaseConnectorMiddleware } from "@/core/infrastructure/middlewares/database-connector.middleware";
 import { Response } from "@/core/infrastructure/http/classes/response";
 import type { GetCustomerUseCase } from "@/customers/application/use-cases/get-customer.use-case";
+import { CustomerNotFoundException } from "@/customers/domain/exceptions/customer-not-found.exception";
 
-async function getCustomer(event: Event, context: Context & AppContext) {
+export async function getCustomer(event: Event, context: Context & AppContext) {
   const getCustomer = context.get<GetCustomerUseCase>("GetCustomerUseCase");
   const id = event.pathParameters!.id!;
   try {
     const customer = await getCustomer.execute(id);
     return Response.success(200, customer.toPrimitives());
-  } catch (error: any) {
+  } catch (error) {
     switch (error.name) {
-      case "CustomerNotFoundError":
+      case CustomerNotFoundException.name:
         return Response.error(404, error.message);
       default:
         return Response.error(500, error.message);

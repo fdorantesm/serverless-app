@@ -12,7 +12,10 @@ import { databaseConnectorMiddleware } from "@/core/infrastructure/middlewares/d
 import { Response } from "@/core/infrastructure/http/classes/response";
 import type { ListCustomersUseCase } from "@/customers/application/use-cases/list-customers.use-case";
 
-async function listCustomers(_event: Event, context: Context & AppContext) {
+export async function listCustomers(
+  _event: Event,
+  context: Context & AppContext
+) {
   const listCustomers = context.get<ListCustomersUseCase>(
     "ListCustomersUseCase"
   );

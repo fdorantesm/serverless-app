@@ -13,7 +13,10 @@ import { Response } from "@/core/infrastructure/http/classes/response";
 import type { DeleteCustomerUseCase } from "@/customers/application/use-cases/delete-customer.use-case";
 import { CustomerNotFoundException } from "@/customers/domain/exceptions/customer-not-found.exception";
 
-async function deleteCustomer(event: Event, context: Context & AppContext) {
+export async function deleteCustomer(
+  event: Event,
+  context: Context & AppContext
+) {
   const id = event.pathParameters!.id!;
   const deleteCustomer = context.get<DeleteCustomerUseCase>(
     "DeleteCustomerUseCase"

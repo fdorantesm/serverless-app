@@ -1,3 +1,5 @@
+import type { Credit } from "@/credits/domain/interfaces/credit.interface";
+
 export interface Customer {
   id: string;
   name: string;
@@ -5,4 +7,6 @@ export interface Customer {
   phone: string;
   createdAt: Date;
   updatedAt: Date;
+  // virtual properties
+  credits?: Credit[];
 }

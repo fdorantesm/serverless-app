@@ -14,7 +14,10 @@ import type { UpdateCustomerUseCase } from "@/customers/application/use-cases/up
 import type { UpdateCustomerDto } from "@/customers/infrastructure/http/dtos/update-customer.dto";
 import { CustomerNotFoundException } from "@/customers/domain/exceptions/customer-not-found.exception";
 
-async function updateCustomer(event: Event, context: Context & AppContext) {
+export async function updateCustomer(
+  event: Event,
+  context: Context & AppContext
+) {
   const id = event.pathParameters!.id!;
   const payload = event.body as unknown as UpdateCustomerDto;
 

@@ -1,5 +1,7 @@
 import { DateTime } from "@/core/domain/value-objects/date";
 import { Id } from "@/core/domain/value-objects/id";
+import { CreditEntity } from "@/credits/domain/entities/credit.entity";
+import type { Credit } from "@/credits/domain/interfaces/credit.interface";
 import type { Customer } from "@/customers/domain/interfaces/customer.interface";
 import type { CustomerPayload } from "@/customers/domain/types/customer.payload";
 
@@ -10,6 +12,8 @@ export class CustomerEntity {
   private _phone: string;
   private _createdAt: DateTime;
   private _updatedAt: DateTime;
+  // virtuals
+  private __credits?: CreditEntity[];
 
   private constructor(payload: Customer) {
     this._id = new Id(payload.id);
@@ -18,6 +22,9 @@ export class CustomerEntity {
     this._phone = payload.phone;
     this._createdAt = new DateTime(payload.createdAt);
     this._updatedAt = new DateTime(payload.updatedAt);
+    // virtuals
+    this.__credits =
+      payload.credits && payload.credits.map(CreditEntity.createFromPrimitives);
   }
 
   public static createToPrimitives(payload: CustomerPayload): Customer {
@@ -28,6 +35,7 @@ export class CustomerEntity {
       phone: payload.phone,
       createdAt: new DateTime().getValue(),
       updatedAt: new DateTime().getValue(),
+      credits: [],
     }).toPrimitives();
   }
 
@@ -39,6 +47,7 @@ export class CustomerEntity {
       phone: payload.phone,
       createdAt: new DateTime(payload.createdAt).getValue(),
       updatedAt: new DateTime(payload.updatedAt).getValue(),
+      credits: payload.credits,
     });
   }
 
@@ -66,6 +75,10 @@ export class CustomerEntity {
     return this._phone;
   }
 
+  public getCredits(): CreditEntity[] {
+    return this.__credits ?? [];
+  }
+
   public setName(name: string): void {
     this._name = name;
   }
@@ -78,6 +91,14 @@ export class CustomerEntity {
     this._phone = phone;
   }
 
+  public setCredits(credits: Credit[]): void {
+    this.__credits = credits.map(CreditEntity.createFromPrimitives);
+  }
+
+  public hasCredits(): boolean {
+    return (this.__credits ?? []).length > 0;
+  }
+
   public toPrimitives(): Customer {
     return {
       id: this._id.getValue(),
@@ -86,6 +107,8 @@ export class CustomerEntity {
       phone: this._phone,
       createdAt: this._createdAt.getValue(),
       updatedAt: this._updatedAt.getValue(),
+      credits:
+        this.__credits && this.__credits.map((credit) => credit.toPrimitives()),
     };
   }
 }

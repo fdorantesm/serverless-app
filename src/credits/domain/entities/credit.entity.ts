@@ -82,6 +82,16 @@ export class CreditEntity {
     return this._cutOffDay;
   }
 
+  public setBalance(balance: number): void {
+    this._balance = balance;
+    this._updatedAt = new Date();
+  }
+
+  public setLimit(limit: number): void {
+    this._limit = limit;
+    this._updatedAt = new Date();
+  }
+
   public toPrimitives(): Credit {
     return {
       id: this._id,

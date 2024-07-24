@@ -5,6 +5,9 @@ frameworkVersion: "3"
 provider:
   name: aws
   runtime: nodejs20.x
+  profile: serverless-app
+  deploymentBucket:
+    name: fdorantesm-serverless-app-bucket
 
 functions:
   health:

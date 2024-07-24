@@ -1,5 +1,5 @@
 import { container } from "@/core";
-import { CreditsRepository } from "@/credits/infrastructure/repositories/credits.repository";
+import { CreditsDatabaseRepository } from "@/credits/infrastructure/repositories/credits.database-repository";
 import { CreditsService } from "@/credits/infrastructure/services/credits.service";
 import { CreateCreditUseCase } from "@/credits/application/use-cases/create-credit.use-case";
 import { CreditModel } from "@/credits/infrastructure/models/credit.model";
@@ -8,7 +8,7 @@ import type { GetCreditUseCase } from "@/credits/application/use-cases/get-credi
 
 container.bind("CreateCreditUseCase").to(CreateCreditUseCase);
 container.bind("CreditsService").to(CreditsService);
-container.bind("CreditsRepository").to(CreditsRepository);
+container.bind("CreditsRepository").to(CreditsDatabaseRepository);
 container.bind("CreditModel").toConstantValue(CreditModel);
 
 export {

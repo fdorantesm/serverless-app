@@ -5,3 +5,5 @@ export interface AppContext {
 }
 
 export interface Context extends LambdaContext {}
+
+export interface FunctionContext extends Context, AppContext {}

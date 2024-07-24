@@ -11,4 +11,5 @@ export interface CustomersService {
   findOne(
     filter: Partial<CustomerPayload>
   ): Promise<CustomerEntity | undefined>;
+  clear(): Promise<void>;
 }

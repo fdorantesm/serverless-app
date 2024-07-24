@@ -67,4 +67,8 @@ export class CustomersDatabaseRepository implements CustomersRepository {
 
     return undefined;
   }
+
+  public async clear(): Promise<void> {
+    await this.model.deleteMany({}).exec();
+  }
 }

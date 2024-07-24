@@ -14,8 +14,12 @@ import { databaseConnectorMiddleware } from "@/core/infrastructure/middlewares/d
 import type { CustomerPayload } from "@/customers/domain/types/customer.payload";
 import { Response } from "@/core/infrastructure/http/classes/response";
 import type { CreateCustomerUseCase } from "@/customers/application/use-cases/create-customer.use-case";
+import { CustomerAlreadyExistsException } from "@/customers/domain/exceptions/customer-already-exists.exception";
 
-async function createCustomer(event: Event, context: Context & AppContext) {
+export async function createCustomer(
+  event: Event,
+  context: Context & AppContext
+) {
   try {
     const createCustomer = context.get<CreateCustomerUseCase>(
       "CreateCustomerUseCase"
@@ -26,7 +30,7 @@ async function createCustomer(event: Event, context: Context & AppContext) {
     return Response.success(201, customer.toPrimitives());
   } catch (error) {
     switch (error.name) {
-      case "CustomerAlreadyExistsException": {
+      case CustomerAlreadyExistsException.name: {
         return Response.error(409, error.message);
       }
 

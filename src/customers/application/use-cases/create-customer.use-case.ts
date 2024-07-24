@@ -27,8 +27,6 @@ export class CreateCustomerUseCase implements Executable {
       CustomerEntity.createToPrimitives(payload)
     );
 
-    console.log(`Customer created: ${customer.getId()}`);
-
     return customer;
   }
 }

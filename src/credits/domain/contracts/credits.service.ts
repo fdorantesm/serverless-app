@@ -9,4 +9,5 @@ export interface CreditsService {
   update(id: string, payload: Partial<Credit>): Promise<CreditEntity>;
   delete(id: string): Promise<boolean>;
   findByCustomerId(customerId: string): Promise<CreditEntity[]>;
+  clear(): Promise<void>;
 }

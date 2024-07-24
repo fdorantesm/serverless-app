@@ -21,7 +21,7 @@ export class CustomersService {
     return this.customersRepository.get(id);
   }
 
-  public update(id: string, data: CustomerPayload) {
+  public update(id: string, data: Partial<CustomerPayload>) {
     return this.customersRepository.update(id, data);
   }
 
@@ -35,5 +35,9 @@ export class CustomersService {
 
   public findOne(filter: Partial<CustomerPayload>) {
     return this.customersRepository.findOne(filter);
+  }
+
+  public clear() {
+    return this.customersRepository.clear();
   }
 }

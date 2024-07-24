@@ -1,10 +1,11 @@
 import { Inject, Injectable } from "@/core/injection";
+import type { CreditsRepository } from "@/credits/domain/contracts/credits.repository";
 import { CreditEntity } from "@/credits/domain/entities/credit.entity";
 import type { CreditPayload } from "@/credits/domain/types/credit-payload.type";
 import type { CreditModel } from "@/credits/infrastructure/models/credit.model";
 
 @Injectable()
-export class CreditsRepository {
+export class CreditsDatabaseRepository implements CreditsRepository {
   constructor(
     @Inject("CreditModel")
     private readonly creditModel: typeof CreditModel
@@ -46,16 +47,19 @@ export class CreditsRepository {
 
   public async update(
     id: string,
-    payload: Partial<CreditPayload>
+    payload: Partial<CreditPayload | undefined>
   ): Promise<CreditEntity | undefined> {
-    const credit = await this.creditModel
-      .updateOne({ id }, payload)
-      .then(() => this.get(id));
+    await this.creditModel.updateOne({ id }, payload);
 
-    if (credit) {
-      return credit;
-    }
+    return this.get(id);
+  }
 
-    return undefined;
+  public async delete(id: string): Promise<boolean> {
+    const credit = await this.creditModel.deleteOne({ id });
+    return Boolean(credit);
+  }
+
+  public async clear(): Promise<void> {
+    await this.creditModel.deleteMany({});
   }
 }

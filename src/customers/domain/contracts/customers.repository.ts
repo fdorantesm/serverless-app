@@ -7,11 +7,12 @@ export interface CustomersRepository {
   get(id: string): Promise<CustomerEntity | undefined>;
   update(
     id: string,
-    data: CustomerPayload
+    data: Partial<CustomerPayload>
   ): Promise<CustomerEntity | undefined>;
   delete(id: string): Promise<boolean>;
   exists(id: string): Promise<boolean>;
   findOne(
     filter: Partial<CustomerPayload>
   ): Promise<CustomerEntity | undefined>;
+  clear(): Promise<void>;
 }

@@ -15,7 +15,7 @@ import { validationMiddleware } from "@/core/infrastructure/middlewares/validato
 import type { CreateCreditUseCase } from "@/credits";
 import { Response } from "@/core/infrastructure/http/classes/response";
 
-async function createCustomerCredit(
+export async function createCustomerCredit(
   event: Event,
   context: Context & AppContext
 ) {

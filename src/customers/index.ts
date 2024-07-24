@@ -4,7 +4,7 @@ import { GetCreditUseCase } from "@/credits/application/use-cases/get-credit.use
 import { GetCreditsUseCase } from "@/credits/application/use-cases/get-credits.use-case";
 import { UpdateCreditUseCase } from "@/credits/application/use-cases/update-credit.use-case";
 import { CreditModel } from "@/credits/infrastructure/models/credit.model";
-import { CreditsRepository } from "@/credits/infrastructure/repositories/credits.repository";
+import { CreditsDatabaseRepository } from "@/credits/infrastructure/repositories/credits.database-repository";
 import { CreditsService } from "@/credits/infrastructure/services/credits.service";
 import { CreateCustomerUseCase } from "@/customers/application/use-cases/create-customer.use-case";
 import { DeleteCustomerUseCase } from "@/customers/application/use-cases/delete-customer.use-case";
@@ -20,7 +20,7 @@ container.bind("CustomersService").to(CustomersService);
 container.bind("CustomersRepository").to(CustomersDatabaseRepository);
 
 container.bind("CreditModel").toConstantValue(CreditModel);
-container.bind("CreditsRepository").to(CreditsRepository);
+container.bind("CreditsRepository").to(CreditsDatabaseRepository);
 container.bind("CreditsService").to(CreditsService);
 container.bind("CreateCreditUseCase").to(CreateCreditUseCase);
 container.bind("UpdateCreditUseCase").to(UpdateCreditUseCase);

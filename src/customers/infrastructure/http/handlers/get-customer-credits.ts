@@ -26,7 +26,6 @@ async function getCustomerCredits(event: Event, context: Context & AppContext) {
 
     const getCredits = context.get<GetCreditsUseCase>("GetCreditsUseCase");
     const credits = await getCredits.execute(customerId);
-    console.log({ credits });
     const creditsPrimitives = credits.map((credit) => credit.toPrimitives());
 
     return Response.success(200, creditsPrimitives);
